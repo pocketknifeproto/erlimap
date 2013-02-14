@@ -70,6 +70,10 @@ analyze_response(authenticated, Responses, {command, fetch, _}, From) ->
 analyze_response(authenticated, Responses, {command, store, _}, From) ->
   send_client_response_result({ok, Responses}, From),
   authenticated;
+
+analyze_response(authenticated, Responses, {command, expunge, _}, From) ->
+  send_client_response_result({ok, Responses}, From),
+  authenticated;
   
 %% NOOP
 analyze_response(StateName, Responses, {command, noop, {}}, From) ->

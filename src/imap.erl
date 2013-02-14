@@ -5,7 +5,7 @@
 -behaviour(gen_server).
 
 -export([open_account/5, close_account/1,
-         select/2, examine/2, search/2, fetch/3, store/4
+         select/2, examine/2, search/2, fetch/3, store/4, expunge/1
         ]).
 
 -export([init/1, handle_call/3, handle_cast/2, handle_info/2, code_change/3,
@@ -35,6 +35,10 @@ fetch(Account, SequenceSet, MsgDataItems) ->
 
 store(Account, SequenceSet, Flags, Action) ->
   gen_server:call(Account, {store, SequenceSet, Flags, Action}).
+
+expunge(Account) ->
+  gen_server:call(Account, expunge).
+
 %%%-------------------
 %%% Callback functions
 %%%-------------------
@@ -70,6 +74,8 @@ handle_call({fetch, SequenceSet, MsgDataItems}, _From, Conn) ->
   {reply, imap_fsm:fetch(Conn, SequenceSet, MsgDataItems), Conn};
 handle_call({store, SequenceSet, Flags, Action}, _From, Conn) ->
   {reply, imap_fsm:store(Conn, SequenceSet, Flags, Action), Conn};
+handle_call(expunge, _From, Conn) ->
+  {reply, imap_fsm:expunge(Conn), Conn};
 handle_call(_, _From, Conn) ->
   {reply, ignored, Conn}.
 

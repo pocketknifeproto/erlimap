@@ -36,6 +36,8 @@ prepare_command({command, fetch, Args}) ->
   prepare_tagged_command("FETCH ~s ~s", Args);
 prepare_command({command, store, Args}) ->
   prepare_tagged_command("store ~s ~s \\~s", Args);
+prepare_command({command, expunge, _}) ->
+    prepare_tagged_command("expunge", []);
 prepare_command({command, noop, {}}) ->
   prepare_tagged_command("NOOP", []).
 

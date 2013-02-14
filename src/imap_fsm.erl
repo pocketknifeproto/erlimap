@@ -9,7 +9,8 @@
          select/2, examine/2,
          search/2,
          fetch/3,
-         store/4
+         store/4,
+         expunge/1
         ]).
 
 %% callbacks
@@ -69,6 +70,9 @@ fetch(Conn, SequenceSet, MsgDataItems) ->
 
 store(Conn, SequenceSet, Flags, Action) ->
   gen_fsm:sync_send_event(Conn, {command, store, [SequenceSet, Flags, Action]}).
+
+expunge(Conn) ->
+  gen_fsm:sync_send_event(Conn, {command, expunge, []}).
   
 %%%-------------------
 %%% Callback functions
