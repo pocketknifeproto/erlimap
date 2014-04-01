@@ -1,6 +1,7 @@
 {application, erlimap,
     [{description, "Simple IMAP Library for Erlang"},
      {vsn, "0.0.1"},
+     {registered, []},
      {modules, [imap,
                 imap_cmd,
                 imap_fsm,
